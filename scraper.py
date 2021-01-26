@@ -19,4 +19,11 @@ r = requests.get(url, headers=headers)
 
 print(r.status_code)
 
-#print(r.text)
+splits = r.text.split("""onclick="viewImage('""")[1:]
+
+#splits[0].split("""'""")[0]
+
+splits2 = []
+
+for item in splits:
+    splits2.append(item.split("""'""")[0])
