@@ -34,9 +34,19 @@ for item in splits:
 #https://ko-fi.com/Buttons/LoadGalleryItem?galleryItemId=  (IMAGE KEY)  &external=true&_=1611636437630
 
 for key in hires_keys:
+    print('formatting url with custom key mapped out of hires_keys')
     coolurl = "https://ko-fi.com/Buttons/LoadGalleryItem?galleryItemId={}&external=true&_=1611636437630".format(key)
-    print(coolurl)
     
-coolr = requests.get(coolurl, headers=headers)
-
-hires_split = coolr.text.split('''label-hires pull-right hint mt mb-xs"><a href="''')
+    print('storing new get request in coolr containg new formatted url containing mapped key')
+    coolr = requests.get(coolurl, headers=headers)
+    
+    print('extracting hires url out of coolr, splitting where necessary and storing it as hires_url')
+    hires_url = coolr.text.split('''label-hires pull-right hint mt mb-xs"><a href="''')[1].split('''"''')[0]
+    
+    print('creating a new get request with just the direct url of the png file')
+    get_the_actual_thing = requests.get(hires_url, headers=headers)
+    
+    print('creating a png file using write bytes to get the image')
+    with open(hires_url.split("_")[1], 'wb') as png:
+        png.write(get_the_actual_thing.content)
+    
