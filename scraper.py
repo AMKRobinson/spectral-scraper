@@ -23,7 +23,20 @@ splits = r.text.split("""onclick="viewImage('""")[1:]
 
 #splits[0].split("""'""")[0]
 
-splits2 = []
+hires_keys = []
 
 for item in splits:
-    splits2.append(item.split("""'""")[0])
+    hires_keys.append(item.split("""'""")[0])
+    
+    
+#url for image
+    
+#https://ko-fi.com/Buttons/LoadGalleryItem?galleryItemId=  (IMAGE KEY)  &external=true&_=1611636437630
+
+for key in hires_keys:
+    coolurl = "https://ko-fi.com/Buttons/LoadGalleryItem?galleryItemId={}&external=true&_=1611636437630".format(key)
+    print(coolurl)
+    
+coolr = requests.get(coolurl, headers=headers)
+
+hires_split = coolr.text.split('''label-hires pull-right hint mt mb-xs"><a href="''')
