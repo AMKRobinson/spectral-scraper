@@ -1,0 +1,2 @@
+conda create -n spectral python=3.8 requests 
+conda activate spectral
